@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Test Suite" verbose="1" parallel="none" thread-count="3">
+
+	<listeners>
+		<listener class-name="org.cucumbertaf.testlib.CTAFListener" />
+	</listeners>
+
+
+
+	<test name="ManagerCertification" preserve-order="true">
+		<parameter name="cucumber.features"
+			value="src/test/resources/features/testFeatureFiles/ManagerCertification.feature" />
+		<parameter name="cucumber.glue" value="org.cucumbertaf.stepdefs" />
+		<parameter name="featurename" value="ManagerCertification" />
+		<parameter name="iterations" value="1" />
+		<classes>
+			<class name="org.cucumbertaf.runner.RunCucumberTest" />
+		</classes>
+	</test>
+	
+
+
+</suite>

@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.cucumbertaf</groupId>
+	<artifactId>cucumbertaf</artifactId>
+	<version>1.0-SNAPSHOT</version>
+
+	<properties>
+		<cucumber.version>7.4.1</cucumber.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<suiteXmlFile>testng</suiteXmlFile>
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-testng</artifactId>
+			<version>${cucumber.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>${cucumber.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-picocontainer</artifactId>
+			<version>${cucumber.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>3.141.59</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>5.2.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>5.2.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml-schemas</artifactId>
+			<version>4.1.2</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/tech.grasshopper/extentreports-cucumber6-adapter -->
+		<!--        <dependency>-->
+		<!--            <groupId>tech.grasshopper</groupId>-->
+		<!--            <artifactId>extentreports-cucumber6-adapter</artifactId>-->
+		<!--            <version>2.1.0</version>-->
+		<!--        </dependency>-->
+
+		<!-- https://mvnrepository.com/artifact/com.aventstack/extentreports -->
+		
+		<dependency>
+			<groupId>com.aventstack</groupId>
+			<artifactId>extentreports</artifactId>
+			<version>5.0.9</version>
+		</dependency>
+
+		<dependency>
+			<groupId>tech.grasshopper</groupId>
+			<artifactId>extentreports-cucumber7-adapter</artifactId>
+			<version>1.6.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.22</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>7.5</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.6.2</version>
+		</dependency>
+		
+		
+		<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-resources-plugin -->
+		<dependency>
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-resources-plugin</artifactId>
+		    <version>3.3.1</version>
+		</dependency>
+
+
+	</dependencies>
+
+	<profiles>
+
+		<profile>
+			<id>dev</id>
+			<build>
+				<resources>
+					<resource>
+						<directory>src/main/resources/dev</directory>
+						<filtering>true</filtering>
+						<includes>
+							<include>*.properties</include>
+						</includes>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+
+		<profile>
+			<id>stage</id>
+			<build>
+				<resources>
+					<resource>
+						<directory>src/main/resources/stage</directory>
+						<filtering>true</filtering>
+						<includes>
+							<include>*.properties</include>
+						</includes>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+
+		<profile>
+			<id>configfile</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<resources>
+					<resource>
+						<directory>src/main/resources/configfile</directory>
+						<filtering>true</filtering>
+						<includes>
+							<include>*.properties</include>
+						</includes>
+					</resource>
+				</resources>
+			</build>
+
+		</profile>
+
+	</profiles>
+
+	<build>
+
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.2</version>
+				<configuration>
+					<testFailureIgnore>true</testFailureIgnore>
+					<suiteXmlFiles>
+						<suiteXmlFile>
+                            ${basedir}/src/test/resources/suites/${suiteXmlFile}.xml 
+                          <!-- ${filename} -->
+                        </suiteXmlFile>
+					</suiteXmlFiles>
+
+					<!--The default thread count of the dataprovider in parallel mode is 10.-->
+
+					<!--                    <properties>-->
+					<!--                        <property>-->
+					<!--                            <name>dataproviderthreadcount</name>-->
+					<!--                            <value>3</value>-->
+					<!--                        </property>-->
+					<!--                    </properties>-->
+
+				</configuration>
+			</plugin>
+
+			<!--            <plugin>-->
+			<!--                <groupId>net.masterthought</groupId>-->
+			<!--                <artifactId>maven-cucumber-reporting</artifactId>-->
+			<!--                <version>5.3.0</version>-->
+			<!--                <executions>-->
+			<!--                    <execution>-->
+			<!--                        <id>execution</id>-->
+			<!--                        <phase>test</phase>-->
+			<!--                        <goals>-->
+			<!--                            <goal>generate</goal>-->
+			<!--                        </goals>-->
+			<!--                        <configuration>-->
+			<!--                            <projectName>Cucumber-TestNGResults</projectName>-->
+			<!--                            <outputDirectory>reports/html-reports</outputDirectory>-->
+			<!--                            <inputDirectory>target/cucumber-reports</inputDirectory>-->
+			<!--                            <jsonFiles>-->
+			<!--                                <param>**/*.json</param>-->
+			<!--                            </jsonFiles>-->
+			<!--                        </configuration>-->
+			<!--                    </execution>-->
+			<!--                </executions>-->
+			<!--            </plugin>-->
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			
+			<!--
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.6.0</version>
+				<executions>
+					<execution>
+						<id>first-execution</id>
+						<phase>install</phase>
+						<goals>
+							<goal>java</goal>
+						</goals>
+						<configuration>
+							<mainClass>org.cucumbertaf.utils.MailUtil</mainClass>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			-->
+			
+		</plugins>
+		
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*.properties</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/test/resources</directory>
+				<includes>
+					<include>**/*.xlsx</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
+
+</project>
